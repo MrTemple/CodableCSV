@@ -12,7 +12,7 @@ extension CSVReader: Failable {
     }
     
     /// The type of error raised by the CSV reader.
-    public enum Error: Int {
+    public enum Error: Int, Sendable {
         /// Some of the configuration values provided are invalid.
         case invalidConfiguration = 1
         /// The CSV data is invalid.

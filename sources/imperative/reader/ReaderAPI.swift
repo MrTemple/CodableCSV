@@ -296,10 +296,11 @@ fileprivate extension CSVReader.Error {
     /// - parameter stream: The given input stream.
     /// - parameter underlying: The underlying error thrown by the input stream.
     static func _invalidData(stream: InputStream, underlying: Swift.Error) -> CSVError<CSVReader> {
-        .init(.streamFailure, underlying: underlying,
+        let streamString = "\(stream)"
+        return .init(.streamFailure, underlying: underlying,
               reason: "The provided input stream could not be read in its entirety.",
               help: "Make sure there is data in the input stream and that you have access to it.",
-              userInfo: ["Input stream": stream])
+              userInfo: ["Input stream": streamString])
     }
     /// Error raised when a record is fetched, but there are header names which has the same hash value (i.e. they have the same name).
     static func _invalidHashableHeader() -> CSVError<CSVReader> {

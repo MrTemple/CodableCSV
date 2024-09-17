@@ -1,7 +1,7 @@
 /// The strategies to use when encoding/decoding.
 public enum Strategy {
     /// The strategy to allow/disable escaped fields and how.
-    public enum Escaping: ExpressibleByNilLiteral, ExpressibleByUnicodeScalarLiteral {
+    public enum Escaping: ExpressibleByNilLiteral, ExpressibleByUnicodeScalarLiteral, Sendable {
         /// CSV delimiters can not be escaped.
         case none
         /// Ignore delimiter with in a scalar pair.

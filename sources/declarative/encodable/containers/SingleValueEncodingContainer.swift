@@ -191,9 +191,21 @@ extension ShadowEncoder.SingleValueContainer {
     mutating func encode(_ value: Decimal) throws {
         switch self._encoder.sink._withUnsafeGuaranteedRef({ $0.configuration.decimalStrategy }) {
         case .locale(let locale):
-            var number = value
-            let string = NSDecimalString(&number, locale)
+                // Use NumberFormatter to convert Decimal to String
+            let formatter = NumberFormatter()
+            formatter.locale = locale
+            formatter.numberStyle = .decimal
+            
+                // Ensure Decimal can be converted to String
+            guard let string = formatter.string(from: value as NSDecimalNumber) else {
+                throw EncodingError.invalidValue(value, EncodingError.Context(
+                    codingPath: self.codingPath,
+                    debugDescription: "Unable to encode decimal value \(value) to String."
+                ))
+            }
+            
             try self.encode(string)
+            
         case .custom(let closure):
             try closure(value, self._encoder)
         }

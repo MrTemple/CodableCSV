@@ -11,12 +11,12 @@ public final class CSVError<F>: LocalizedError, CustomNSError, CustomDebugString
     /// A localized message providing "help" text if the user requests help.
     public let helpAnchor: String?
     /// Any further context given needed information to debug the error.
-    public let errorUserInfo: [String:Any]
+    public let errorUserInfo: [String : Sendable]
     /// Any underlying error that cascade into this error.
     public let underlyingError: Swift.Error?
     
     /// Designated initializer.
-    internal init(_ type: F.Failure, underlying: Swift.Error? = nil, reason: String, recovery: String? = nil, help: String? = nil, userInfo: [String:Any] = [:]) {
+    internal init(_ type: F.Failure, underlying: Swift.Error? = nil, reason: String, recovery: String? = nil, help: String? = nil, userInfo: [String:Sendable] = [:]) {
         self.type = type
         self.failureReason = reason
         self.recoverySuggestion = recovery
@@ -66,7 +66,7 @@ public final class CSVError<F>: LocalizedError, CustomNSError, CustomDebugString
 /// An instance that throws custom errors.
 public protocol Failable: AnyObject {
     /// The type of error being thrown.
-    associatedtype Failure: RawRepresentable where Failure.RawValue==Int
+    associatedtype Failure: RawRepresentable, Sendable where Failure.RawValue==Int
     /// The domain of the error being thrown.
     static var errorDomain: String { get }
     /// A description for an error being thrown that depends on the type of the error.

@@ -1,18 +1,37 @@
-// swift-tools-version:5.1
+    // swift-tools-version:5.5
 import PackageDescription
 
 let package = Package(
     name: "CodableCSV",
     platforms: [
-        .macOS(.v10_10), .iOS(.v9), .tvOS(.v9), .watchOS(.v2)
+        .macOS(.v12),
+        .iOS(.v12),
+        .tvOS(.v12),
+        .watchOS(.v7)
     ],
     products: [
-        .library(name: "CodableCSV", targets: ["CodableCSV"]),
+        .library(
+            name: "CodableCSV",
+            targets: ["CodableCSV"]
+        )
     ],
-    dependencies: [],
+    dependencies: [
+        // Add any external package dependencies here, if needed.
+    ],
     targets: [
-        .target(name: "CodableCSV", dependencies: [], path: "sources"),
-        .testTarget(name: "CodableCSVTests", dependencies: ["CodableCSV"], path: "tests"),
-        .testTarget(name: "CodableCSVBenchmarks", dependencies: ["CodableCSV"], path: "benchmarks")
+        .target(
+            name: "CodableCSV",
+            path: "sources"
+        ),
+        .testTarget(
+            name: "CodableCSVTests",
+            dependencies: ["CodableCSV"],
+            path: "tests"
+        ),
+        .testTarget(
+            name: "CodableCSVBenchmarks",
+            dependencies: ["CodableCSV"],
+            path: "benchmarks"
+        )
     ]
 )
